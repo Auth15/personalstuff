@@ -1,5 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-syn.queue_on_teleport("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/BedwarsSuperCoolPro/personalstuff/main/RobloxMinecraft/BedwarsPack\"))()")
+syn.queue_on_teleport("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/BedwarsSuperCoolPro/personalstuff/main/RobloxMinecraft/BedwarsPack\", true))()")
 if game.GameId ~= 2619619496 or game.PlaceId == 6872265039 then
     return 
 end
