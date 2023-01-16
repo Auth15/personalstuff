@@ -1,6 +1,5 @@
-return {
-  ["SongName"] = "Test",
-  ["Lyrics"] = {
-  
-  }
-}
+local Presets = {
+  ["SongName"] = ""
+} 
+
+return Presets 
