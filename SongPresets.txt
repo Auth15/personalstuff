@@ -1,4 +1,4 @@
-{
+return {
   ["SongName"] = "Test",
   ["Lyrics"] = {
   
