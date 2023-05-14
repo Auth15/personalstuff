@@ -6,7 +6,7 @@ local ReplicatedStorage = GameInstance:GetService("ReplicatedStorage")
 local RobloxChatEvents = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") 
 local MsgRemote = RobloxChatEvents:FindFirstChild("SayMessageRequest")
 
-if not SingToggled then 
+if not getgenv().SingToggled then 
 	return 
 end 
 
@@ -21,8 +21,14 @@ if SongData.artist and SongData.title then
 		table.insert(Lyrics, Line)
 	end
 	
+	game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "Lyrist",
+		Text = "Singing " .. SongData.title .. " by " .. SongData.artist,
+		Duration = 5
+	})
+	
 	for i, Line in pairs(Lyrics) do 
-		if SingToggled == false then print("Sing is not toggled!") continue end 
+		if not getgenv().SingToggled then continue end 
 		MsgRemote:FireServer(Line, "All")
 		wait(MsgDelay)
 	end
@@ -30,6 +36,6 @@ else
 	game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "Lyrist",
 		Text = "Lyrics not found for specified song and artist",
-		Duration = 5 
+		Duration = 10 
 	})
 end 
