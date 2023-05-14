@@ -22,7 +22,7 @@ if SongData.artist and SongData.title then
 	end
 	
 	for i, Line in pairs(Lyrics) do 
-		if not SingToggled then break end 
+		if SingToggled == false then print("Sing is not toggled!") continue end 
 		MsgRemote:FireServer(Line, "All")
 		wait(MsgDelay)
 	end
