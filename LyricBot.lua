@@ -4,7 +4,7 @@ local HttpService = GameInstance:GetService("HttpService");
 local ReplicatedStorage = GameInstance:GetService("ReplicatedStorage"); 
 
 local RobloxChatEvents = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents"); 
-local MsgRemote = ReplicatedStorage:FindFirstChild("SayMessageRequest"); 
+local MsgRemote = RobloxChatEvents:FindFirstChild("SayMessageRequest"); 
 
 if not getgenv().SingToggled then return end 
 
