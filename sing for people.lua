@@ -24,7 +24,7 @@ if SongJSON.artist and SongJSON.title then
 else
 	game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "Lyrist",
-		Text = "Lyrics not found for the specified artist and title",
-		Duration = 10 
+		Text = "Lyrics not found for the specified title and artist",
+		Duration = 10
 	});
 end 
