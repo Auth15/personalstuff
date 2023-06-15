@@ -8,6 +8,8 @@ local MsgRemote = RobloxChatEvents:FindFirstChild("SayMessageRequest");
 
 if not getgenv().SingToggled then return end 
 
+getgenv().SaySpeed = getgenv().SaySpeed or 2.5  
+
 Title  = string.gsub(Title, " ", "");
 Artist = string.gsub(Artist, " ", "");
 
@@ -17,7 +19,7 @@ if SongJSON.artist and SongJSON.title then
 	for Line in string.gmatch(SongJSON.lyrics, "[^\n]+") do 
 		if not getgenv().SingToggled then break end 
 		MsgRemote:FireServer(Line, "All");
-		wait(MsgDelay);
+		wait(SaySpeed);
 	end
 else
 	game:GetService("StarterGui"):SetCore("SendNotification", {
