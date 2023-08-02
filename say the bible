@@ -5,7 +5,7 @@ local HttpService = game:GetService('HttpService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local TextService = game:GetService("TextChatService") 
 
-local RobloxChatEvents = ReplicatedStorage:WaitForChild('DefaultChatSystemChatEvents')
+local RobloxChatEvents = ReplicatedStorage:FindFirstChild('DefaultChatSystemChatEvents')
 local MsgRemote = RobloxChatEvents and RobloxChatEvents:FindFirstChild("SayMessageRequest")
 
 local Bibles = {
