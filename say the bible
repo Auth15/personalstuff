@@ -3,14 +3,10 @@
 
 local HttpService = game:GetService('HttpService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local TextService = game:GetService("TextChatService") 
 
-local DefaultChatSystemChatEvents = ReplicatedStorage:WaitForChild('DefaultChatSystemChatEvents')
-
-if not DefaultChatSystemChatEvents then
-	error('This game probably uses a custom chat system')
-end
-
-local SayMessageRequest = DefaultChatSystemChatEvents.SayMessageRequest
+local RobloxChatEvents = ReplicatedStorage:WaitForChild('DefaultChatSystemChatEvents')
+local MsgRemote = RobloxChatEvents and RobloxChatEvents:FindFirstChild("SayMessageRequest")
 
 local Bibles = {
 	Arabic = 'ar_svd',
@@ -42,6 +38,14 @@ if not getgenv().bible_toggled then
 	return
 end
 
+local function SendMessage(Msg)
+	if TextService.ChatInputBarConfiguration then 
+		TextService.ChatInputBarConfiguration.TargetTextChannel:SendAsync(Msg)
+	else
+		MsgRemote:FireServer(Msg, "All")
+	end
+end
+
 local url = 'https://raw.githubusercontent.com/thiagobodruk/bible/master/json/' .. Bibles[SelectedBible] .. '.json'
 local json_bible = HttpService:JSONDecode(game:HttpGet(url))
 
@@ -61,6 +65,6 @@ for _, sentence in pairs(sentences) do
 		break
 	end
 
-	SayMessageRequest:FireServer(sentence, 'All')
+	SendMessage(sentence)
 	wait(SayDelay)
 end
