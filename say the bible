@@ -39,7 +39,7 @@ if not getgenv().bible_toggled then
 end
 
 local function SendMessage(Msg)
-	if TextService.ChatInputBarConfiguration then 
+	if TextService.ChatInputBarConfiguration.TargetTextChannel then 
 		TextService.ChatInputBarConfiguration.TargetTextChannel:SendAsync(Msg)
 	else
 		MsgRemote:FireServer(Msg, "All")
