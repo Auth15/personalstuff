@@ -10,7 +10,7 @@ local MsgRemote = RobloxChatEvents and RobloxChatEvents:FindFirstChild("SayMessa
 if not getgenv().SingToggled then return end 
 
 local function SendMessage(Msg)
-	if TextService.ChatInputBarConfiguration then 
+	if TextService.ChatInputBarConfiguration.TargetTextChannel then 
 		TextService.ChatInputBarConfiguration.TargetTextChannel:SendAsync(Msg); 
 	else
 		MsgRemote:FireServer(Msg, "All"); 
