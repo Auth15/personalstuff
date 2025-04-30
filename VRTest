@@ -32,12 +32,12 @@ RunService.RenderStepped:Connect(function()
 		{
 			Part = LHand,
 			Anchored = false,
-			CFrame = LHandOffset * CFrame.Angles(-math.rad(90),0,0) * CFrame.new(0,0,-3.2) * CurrentCamera.CFrame
+			CFrame = CurrentCamera.CFrame * LHandOffset * CFrame.new(0,0,-2.8) * CFrame.Angles(math.rad(-100),0,0); 
 		},
 		{
 			Part = RHand,
 			Anchored = false,
-			CFrame = RHandOffset * CFrame.Angles(-math.rad(90),0,0) * CFrame.new(0,0,-3.2) * CurrentCamera.CFrame
+			CFrame =  CurrentCamera.CFrame * RHandOffset * CFrame.new(0,0,-2.8) * CFrame.Angles(math.rad(-100),0,0); 
 		}
 	}
       HelperFuncs.PerformAction_Server("SyncMove", Changes); 
