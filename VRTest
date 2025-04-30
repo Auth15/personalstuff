@@ -30,7 +30,7 @@ RunService.RenderStepped:Connect(function()
       local LHandOffset = VRService:GetUserCFrame(Enum.UserCFrame.LeftHand); 
       local RHandOffset = VRService:GetUserCFrame(Enum.UserCFrame.RightHand);
 
-      local HeadOffset = VRService:GetUserCFrame(Enum.UserCFrame.Head); 
+      local HeadOffset = VRService:GetUserCFrame(Enum.UserCFrame.Head) * CurrentCamera.CFrame; 
 
       HelperFuncs.PerformAction_Server("SyncMove", {{Part = Head, CFrame = HeadOffset, Anchored = false}}); 
 end); 
