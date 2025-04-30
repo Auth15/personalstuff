@@ -23,7 +23,7 @@ RunService.RenderStepped:Connect(function()
       local LHandCFrame = CurrentCamera.CFrame * VRService:GetUserCFrame(Enum.UserCFrame.LeftHand); 
       HelperFuncs.PerformAction_Client("SyncMove", {{
             Part = Part,
-            Anchored = false
+            Anchored = false,
             CFrame = LHandCFrame
       }})
 end); 
