@@ -27,7 +27,7 @@ RunService.RenderStepped:Connect(function()
       HelperFuncs.PerformAction_Client("SyncMove", {{
             Part = Part,
             Anchored = false,
-            CFrame = LHandCFrame * CFrame.Angles(0,math.rad(-90),0) * CFrame.new(0,0,=1.5); 
+            CFrame = LHandCFrame * CFrame.Angles(0,math.rad(-90),0) * CFrame.new(0,0,1.5); 
       }})
 end); 
 
