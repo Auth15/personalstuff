@@ -1,0 +1,29 @@
+local Players = game:GetService("Players"); 
+local RunService = game:GetService("RunService");
+local VRService = game:GetService("VRService");
+
+local LP = Players.LocalPlayer
+local CurrentCamera = workspace.CurrentCamera 
+
+local SyncAPI = LP.Backpack:FindFirstChild("SyncAPI", true); 
+local ServerEndpoint = SyncAPI.ServerEndpoint
+
+local HelperFuncs, SyncModule = {}, require(SyncAPI.SyncModule); 
+
+HelperFuncs.PerformAction_Server = function(ActionName, ...)
+      return ServerEndpoint:InvokeServer(ActionName, ...); 
+end 
+
+HelperFuncs.PerformAction_Client = function(ActionName, ...)
+      return SyncModule.PerformAction(LP, ActionName, ...); 
+end 
+
+local Part = HelperFuncs.PerformAction_Client("CreatePart", "Normal", CFrame.new(), LP.Character); 
+RunService.RenderStepped:Connect(function()
+      local LHandCFrame = CurrentCamera.CFrame * VRService:GetUserCFrame(Enum.UserCFrame.LeftHand); 
+      HelperFuncs.PerformAction_Client("SyncMove", {{
+            Part = Part,
+            Anchored = false
+            CFrame = LHandCFrame
+      }})
+end); 
