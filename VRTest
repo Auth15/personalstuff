@@ -24,22 +24,14 @@ end
 local LHand = HelperFuncs.PerformAction_Server("CreatePart", "Normal", CFrame.new(), LP.Character); 
 local RHand = HelperFuncs.PerformAction_Server("CreatePart", "Normal", CFrame.new(), LP.Character); 
 
+local Head = HelperFuncs.PerformAction_Server("CreatePart", "Normal", CFrame.new(), LP.Character); 
+
 RunService.RenderStepped:Connect(function()
       local LHandOffset = VRService:GetUserCFrame(Enum.UserCFrame.LeftHand); 
       local RHandOffset = VRService:GetUserCFrame(Enum.UserCFrame.RightHand);
 
-      local Changes = {
-		{
-			Part = LHand,
-			Anchored = false,
-			CFrame = CurrentCamera.CFrame * LHandOffset * CFrame.new(0,0,-2.8) * CFrame.Angles(math.rad(-100),0,0); 
-		},
-		{
-			Part = RHand,
-			Anchored = false,
-			CFrame =  CurrentCamera.CFrame * RHandOffset * CFrame.new(0,0,-2.8) * CFrame.Angles(math.rad(-100),0,0); 
-		}
-	}
-      HelperFuncs.PerformAction_Server("SyncMove", Changes); 
+      local Head = VRService:GetUserCFrame(Enum.UserCFrame.Head); 
+
+      HelperFuncs.PerformAction_Server("SyncMove", {{Part = Head, CFrame = Head.CFrame, Anchored = false}}); 
 end); 
 
