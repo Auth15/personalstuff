@@ -21,13 +21,23 @@ HelperFuncs.PerformAction_Client = function(ActionName, ...)
       return SyncModule.PerformAction(LP, ActionName, ...); 
 end 
 
-local Part = HelperFuncs.PerformAction_Client("CreatePart", "Normal", CFrame.new(), LP.Character); 
+local LHand = HelperFuncs.PerformAction_Server("CreatePart", "Normal", CFrame.new(), LP.Character); 
+local RHand = HelperFuncs.PerformAction_Server("CreatePart", "Normal", CFrame.new(), LP.Character); 
 RunService.RenderStepped:Connect(function()
       local LHandCFrame = CurrentCamera.CFrame * VRService:GetUserCFrame(Enum.UserCFrame.LeftHand); 
-      HelperFuncs.PerformAction_Client("SyncMove", {{
-            Part = Part,
+      local RHandCFrame = CurrentCamera.CFrame * VRService:GetUserCFrame(Enum.UserCFrame.RightHand); 
+
+      local Changes = {}
+      table.insert(Changes, {
+            Part = LHand,
             Anchored = false,
-            CFrame = LHandCFrame * CFrame.Angles(0,math.rad(-90),0) * CFrame.new(0,0,1.5); 
-      }})
+            CFrame = LHandCFrame * CFrame.Angles(0,math.rad(90),0) * CFrame.new(0,0,-1.5); 
+      },{
+            Part = RHand,
+            Anchored = false,
+            CFrame = RHandCFrame * CFrame.Angles(0,math.rad(90),0) * CFrame.new(0,0,-1.5); 
+      })
+
+      HelperFuncs.PerformAction_Server("SyncMove", Changes); 
 end); 
 
