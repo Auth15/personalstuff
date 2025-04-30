@@ -10,6 +10,9 @@ local ServerEndpoint = SyncAPI.ServerEndpoint
 
 local HelperFuncs, SyncModule = {}, require(SyncAPI.SyncModule); 
 
+LP.Character.UpperTorso:ClearAllChildren(); 
+LP.Character.LowerTorso:Destroy(); 
+
 HelperFuncs.PerformAction_Server = function(ActionName, ...)
       return ServerEndpoint:InvokeServer(ActionName, ...); 
 end 
@@ -24,6 +27,7 @@ RunService.RenderStepped:Connect(function()
       HelperFuncs.PerformAction_Client("SyncMove", {{
             Part = Part,
             Anchored = false,
-            CFrame = LHandCFrame * CFrame.new(0,0,-3)
+            CFrame = LHandCFrame * CFrame.Angles(0,math.rad(-90),0) * CFrame.new(0,0,=1.5); 
       }})
 end); 
+
