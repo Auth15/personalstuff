@@ -32,6 +32,6 @@ RunService.RenderStepped:Connect(function()
 
       local Head = VRService:GetUserCFrame(Enum.UserCFrame.Head); 
 
-      HelperFuncs.PerformAction_Server("SyncMove", {{Part = Head, CFrame = Head.CFrame, Anchored = false}}); 
+      HelperFuncs.PerformAction_Server("SyncMove", {{Part = Head, CFrame = Head, Anchored = false}}); 
 end); 
 
