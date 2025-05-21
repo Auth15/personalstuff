@@ -38,8 +38,6 @@ local LHand = createLimb({ Name = "LHand", Transparency = 0.5 });
 local RHand = createLimb({ Name = "RHand", Transparency = 0.5 });
 
 Head.Transparency = 1
-LHand.Transparency = 1
-RHand.Transparency = 1
 
 Head.CanCollide = false
 LHand.CanCollide = false
@@ -68,10 +66,11 @@ userInputService.UserCFrameChanged:Connect(function(EnumItem, Value)
 
     currentCamera.CFrame = map['Head'].CFrame
 
+    local CFrame
     if EnumItem == Enum.UserCFrame.LeftHand then
-        CFrame = (Cam.CFrame * (CFrame.new(Value.p * (Cam.HeadScale - 1)) * Value)) * CFrame.Angles(math.rad(90),0,0)
+        CFrame = (currentCamera.CFrame * (CFrame.new(Value.p * (currentCamera.HeadScale - 1)) * Value)) * CFrame.Angles(math.rad(90),0,0)
     elseif EnumItem == Enum.UserCFrame.RightHand then
-        CFrame = (Cam.CFrame * (CFrame.new(Value.p * (Cam.HeadScale - 1)) * Value)) * CFrame.Angles(math.rad(90),0,0)
+        CFrame = (currentCamera.CFrame * (CFrame.new(Value.p * (currentCamera.HeadScale - 1)) * Value)) * CFrame.Angles(math.rad(90),0,0)
     end
 
     Changes['CFrame'] = CFrame
