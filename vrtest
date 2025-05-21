@@ -44,12 +44,14 @@ Ltorso:Destroy();
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
-		task.spawn(serverEndpoint.InvokeServer, "SyncMove", {
-			{
-				Part = Head,
-				Anchored = true,
-				CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
-			}
-		})
+		task.spawn(function()
+			serverEndpoint:InvokeServer("SyncMove", {
+				{
+					Part = Head,
+					Anchored = true,
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+				}
+			})
+		end); 
 	end
 end); 
