@@ -51,8 +51,6 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 
 Ltorso:Destroy();
 
-local HandOffset = Vector3.new(
-
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
