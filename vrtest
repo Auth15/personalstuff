@@ -3,6 +3,9 @@ local vrService = game:GetService("VRService");
 local players = game:GetService("Players");
 local userInputService = game:GetService("UserInputService"); 
 
+game:GetService("StarterGui"):SetCore("VRLaserPointerMode", 0);
+game:GetService("StarterGui"):SetCore("VREnableControllerModels", false);
+
 -- // constants
 local lp = players.LocalPlayer
 local currentCamera = workspace.CurrentCamera 
@@ -62,7 +65,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = LHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(180),0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(90),0)
 				}
 			})
 		end); 
@@ -72,7 +75,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = RHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(180),0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(90),0)
 				}
 			})
 		end); 
