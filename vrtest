@@ -1,0 +1,55 @@
+-- // services
+local vrService = game:GetService("VRService");
+local players = game:GetService("Players");
+local userInputService = game:GetService("UserInputService"); 
+
+-- // constants
+local lp = players.LocalPlayer
+local currentCamera = workspace.CurrentCamera 
+
+local serverEndpoint = lp.Backpack:FindFirstChild("ServerEndpoint", true);
+
+-- // functions 
+local performAction = function(actionName, ...)
+	return serverEndpoint:InvokeServer(actionName, ...); 
+end 
+
+local createLimb = function(properties)
+	local fakeLimb = serverEndpoint:InvokeServer("CreatePart", "Normal", CFrame.new(0,0,0), game.Workspace); 
+	
+	for key, value in next, properties do 
+		properties[key .. "\0"] = value 
+	end
+
+	task.spawn(function()
+		serverEndpoint:InvokeServer("SyncSurface", {{
+			Part = fakeLimb,
+			Surfaces = properties 
+		}})
+	end);	
+
+	return fakeLimb
+end 
+
+-- // setup limbs
+local Head = task.spawn(createLimb, {{ Name = "Head" }}); 
+local LHand = task.spawn(createLimb, {{ Name = "LHand"}});
+local RHand = task.spawn(createLimb, {{ Name = "RHand"}});
+
+-- // update positions
+local character = lp.Character
+local Ltorso = character:FindFirstChild("LowerTorso"); 
+
+Ltorso:Destroy();
+
+userInputService.UserCFrameChanged:Connect(function(part,move)
+	if part == Enum.UserCFrame.Head then
+		task.spawn(serverEndpoint.InvokeServer, "SyncMove", {
+			{
+				Part = Head,
+				Anchored = true,
+				CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+			}
+		})
+	end
+end); 
