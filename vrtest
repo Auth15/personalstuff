@@ -38,8 +38,6 @@ local LHand = createLimb({ Name = "LHand", Transparency = 0.5 });
 local RHand = createLimb({ Name = "RHand", Transparency = 0.5 });
 
 Head.Transparency = 1
-LHand.Transparency = 1
-RHand.Transparency = 1
 
 Head.CanCollide = false
 LHand.CanCollide = false
@@ -68,7 +66,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = LHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,0,-2.5) * CFrame.Angles(0,math.rad(-90),0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.2,-2.5) * CFrame.Angles(0,math.rad(-90),0)
 				}
 			})
 		end); 
@@ -78,7 +76,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = RHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,0,-2.5) * CFrame.Angles(0,math.rad(-90),0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.2,-2.5) * CFrame.Angles(0,math.rad(-90),0)
 				}
 			})
 		end); 
