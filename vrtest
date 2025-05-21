@@ -42,8 +42,8 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 Ltorso:Destroy(); 
 
 local Head = createLimb({ Name = "Head", Transparency = 0.5, CanCollide = false }); 
-local LHand = createLimb({ Name = "LHand", Transparency = 0.5, CanCollide = false, Size = Vector3.new(2,2,5) });
-local RHand = createLimb({ Name = "RHand", Transparency = 0.5, CanCollide = false, Size = Vector3.new(2,2,5) });
+local LHand = createLimb({ Name = "LHand", Transparency = 0.5, CanCollide = false });
+local RHand = createLimb({ Name = "RHand", Transparency = 0.5, CanCollide = false });
 
 Head.Transparency = 1
 
