@@ -37,6 +37,10 @@ local Head = createLimb({ Name = "Head", Transparency = 0.5 });
 local LHand = createLimb({ Name = "LHand", Transparency = 0.5 });
 local RHand = createLimb({ Name = "RHand", Transparency = 0.5 });
 
+Head.Transparency = 1
+LHand.Transparency = 1
+RHand.Transparency = 1
+
 Head.CanCollide = false
 LHand.CanCollide = false
 RHand.CanCollide = false
@@ -53,6 +57,26 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 			serverEndpoint:InvokeServer("SyncMove", {
 				{
 					Part = Head,
+					Anchored = true,
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+				}
+			})
+		end); 
+	elseif part == Enum.UserCFrame.LeftHand then
+		task.spawn(function()
+			serverEndpoint:InvokeServer("SyncMove", {
+				{
+					Part = LHand,
+					Anchored = true,
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+				}
+			})
+		end); 
+	elseif part == Enum.UserCFrame.RightHand then
+		task.spawn(function()
+			serverEndpoint:InvokeServer("SyncMove", {
+				{
+					Part = RHand,
 					Anchored = true,
 					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
 				}
