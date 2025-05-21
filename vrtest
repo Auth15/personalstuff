@@ -41,15 +41,29 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 
 Ltorso:Destroy(); 
 
-local Head = createLimb({ Name = "Head", CanCollide = false }); 
-local LHand = createLimb({ Name = "LHand", CanCollide = false, Size = Vector3.new(1.8,1,4.5) });
-local RHand = createLimb({ Name = "RHand", CanCollide = false, Size = Vector3.new(1.8,1,4.5) });
+local useCollision = false
+
+local Head = createLimb({ Name = "Head", CanCollide = useCollision }); 
+local LHand = createLimb({ Name = "LHand", CanCollide = useCollision, Size = Vector3.new(2,1.4,5) });
+local RHand = createLimb({ Name = "RHand", CanCollide = useCollision, Size = Vector3.new(2,1.4,5) });
 
 LHand.Transparency = 0.5
 Head.Transparency = 0.5
 RHand.Transparency = 0.5
 
 -- // setup connections 
+userInputService.InputBegan:Connect(function(key, gameProcessed)
+	if key.UserInputType == Enum.UserInputType.MouseButton1 then
+		useCollision = true 
+	end
+end); 
+
+userInputService.InputEnded:Conenct(function(key, gameProcessed)
+	if key.UserInputType == Enum.UserInputType.MouseButton1 then
+		useCollision = false
+	end
+end); 
+
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
@@ -68,8 +82,8 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = LHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(-1.2 * currentCamera.HeadScale,-1.4,-3.2) * CFrame.Angles(0,0,0), 
-						["Velocity\0"] = userInputService:IsKeyDown(Enum.UserInputType.MouseButton1) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
-						["CanCollide\0"] = userInputService:IsKeyDown(Enum.UserInputType.MouseButton1)
+						["Velocity\0"] = useCollision and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
+						["CanCollide\0"] = useCollision
 					}
 				}
 			})
@@ -81,8 +95,8 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = RHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(1.2 * currentCamera.HeadScale,-1.5,-3.2) * CFrame.Angles(0,0,0),
-						["Velocity\0"] = userInputService:IsKeyDown(Enum.UserInputType.MouseButton1) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
-						["CanCollide\0"] = userInputService:IsKeyDown(Enum.UserInputType.MouseButton1) and true or false
+						["Velocity\0"] = useCollision and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
+						["CanCollide\0"] = useCollision
 					}
 				}
 			})
