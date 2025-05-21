@@ -49,8 +49,14 @@ LHand.Transparency = 0.5
 Head.Transparency = 0.5
 RHand.Transparency = 0.5
 
--- // update positions
+-- // setup connections 
+userInputService.InputBegan:Connect(function(key, gameProcessed)
+	print(key.UserInputType)
+end)
+
 userInputService.UserCFrameChanged:Connect(function(part,move)
+	
+
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
 			serverEndpoint:InvokeServer("SyncMove", {
@@ -67,7 +73,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = LHand,
 					Surfaces = {
-						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0.25 * currentCamera.HeadScale,-1.4,-3) * CFrame.Angles(0,0,0),
+						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(1.35 * currentCamera.HeadScale,-1.4,-3) * CFrame.Angles(0,0,0),
 						["Velocity\0"] = userInputService:IsKeyDown(Enum.KeyCode.ButtonR2) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
 						["CanCollide\0"] = userInputService:IsKeyDown(Enum.KeyCode.ButtonR2) and true or false
 					}
@@ -80,7 +86,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = RHand,
 					Surfaces = {
-						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0.25 * currentCamera.HeadScale,-1.4,-3) * CFrame.Angles(0,0,0),
+						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(1.35 * currentCamera.HeadScale,-1.4,-3) * CFrame.Angles(0,0,0),
 						["Velocity\0"] = userInputService:IsKeyDown(Enum.KeyCode.ButtonR2) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
 						["CanCollide\0"] = userInputService:IsKeyDown(Enum.KeyCode.ButtonR2) and true or false
 					}
