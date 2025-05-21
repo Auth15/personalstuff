@@ -46,8 +46,6 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 Ltorso:Destroy();
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
-	currentCamera.CFrame = Head.CFrame
-
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
 			serverEndpoint:InvokeServer("SyncMove", {
