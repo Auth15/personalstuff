@@ -32,9 +32,9 @@ local createLimb = function(properties)
 end 
 
 -- // setup limbs
-local Head = task.spawn(createLimb, {{ Name = "Head" }}); 
-local LHand = task.spawn(createLimb, {{ Name = "LHand"}});
-local RHand = task.spawn(createLimb, {{ Name = "RHand"}});
+local Head = task.spawn(createLimb, { Name = "Head" }); 
+local LHand = task.spawn(createLimb, { Name = "LHand"});
+local RHand = task.spawn(createLimb, { Name = "RHand"});
 
 -- // update positions
 local character = lp.Character
