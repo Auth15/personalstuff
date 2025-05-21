@@ -33,9 +33,9 @@ local createLimb = function(properties)
 end 
 
 -- // setup limbs
-local Head = task.spawn(createLimb, { Name = "Head" }); 
-local LHand = task.spawn(createLimb, { Name = "LHand" });
-local RHand = task.spawn(createLimb, { Name = "RHand" });
+local Head = createLimb({ Name = "Head" }); 
+local LHand = createLimb({ Name = "LHand" });
+local RHand = createLimb({ Name = "RHand" });
 
 -- // update positions
 local character = lp.Character
@@ -44,8 +44,6 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 Ltorso:Destroy();
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
-	print(part); 
-
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
 			serverEndpoint:InvokeServer("SyncMove", {
@@ -55,8 +53,6 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
 				}
 			})
-
-			print("Moved: Head CF:", Head.CFrame)
 		end); 
 	end
 end); 
