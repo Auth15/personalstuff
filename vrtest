@@ -51,6 +51,8 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 
 Ltorso:Destroy();
 
+local HandOffset = Vector3.new(
+
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
@@ -68,7 +70,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = LHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,0,-2.5) * CFrame.Angles(0,math.rad(-90),0)
 				}
 			})
 		end); 
@@ -78,7 +80,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = RHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,0,-2.5) * CFrame.Angles(0,math.rad(-90),0)
 				}
 			})
 		end); 
