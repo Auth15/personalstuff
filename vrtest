@@ -42,27 +42,43 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 Ltorso:Destroy(); 
 
 local useCollision = false
+local canFling = false
 
-local Head = createLimb({ Name = "Head", CanCollide = useCollision }); 
-local LHand = createLimb({ Name = "LHand", CanCollide = useCollision, Size = Vector3.new(2,1.4,5) });
-local RHand = createLimb({ Name = "RHand", CanCollide = useCollision, Size = Vector3.new(2,1.4,5) });
+local Head = createLimb({ Name = "Head", CanCollide = false }); 
+local LHand = createLimb({ Name = "LHand", CanCollide = useCollision, Size = Vector3.new(1,1,5) });
+local RHand = createLimb({ Name = "RHand", CanCollide = useCollision, Size = Vector3.new(1,1,5) });
 
 LHand.Transparency = 0.5
 Head.Transparency = 0.5
 RHand.Transparency = 0.5
 
 -- // setup connections 
-userInputService.InputBegan:Connect(function(key, gameProcessed)
-	if key.UserInputType == Enum.UserInputType.MouseButton1 then
-		useCollision = true 
-	end
-end); 
+userInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end 
 
-userInputService.InputEnded:Connect(function(key, gameProcessed)
-	if key.UserInputType == Enum.UserInputType.MouseButton1 then
-		useCollision = false
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		useCollision = true
+
+		if userInputService:IsKeyDown(Enum.UserInputType.MouseButton2) then
+			canFling = true
+		end
+	elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
+		if userInputService:IsKeyDown(Enum.UserInputType.MouseButton1) then
+			canFling = true
+		end
 	end
-end); 
+end);
+
+userInputService.InputEnded:Connect(function(input, gameProcessed)
+	if gameProcessed then return end 
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		useCollision = false
+		canFling = false
+	elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
+		canFling = false
+	end
+end);
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
