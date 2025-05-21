@@ -50,8 +50,17 @@ Head.Transparency = 0.5
 RHand.Transparency = 0.5
 
 -- // setup connections 
+local CollisionEnabled = false
 userInputService.InputBegan:Connect(function(key, gameProcessed)
-	print(key.UserInputType)
+	if key.UserInputType == Enum.KeyCode.MouseButton1 then 
+		CollisionEnabled = true 
+	end
+end)
+
+userInputService.InputEnded:Connect(function(key, gameProcessed)
+	if key.UserInputType == Enum.KeyCode.MouseButton1 then 
+		CollisionEnabled = false 
+	end
 end)
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
@@ -74,8 +83,8 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = LHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(-1.35 * currentCamera.HeadScale,-1.4,-3.2) * CFrame.Angles(0,0,0),
-						["Velocity\0"] = userInputService:IsKeyDown(Enum.KeyCode.MouseButton1) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
-						["CanCollide\0"] = userInputService:IsKeyDown(Enum.KeyCode.MouseButton1) and true or false
+						["Velocity\0"] = CollisionEnabled and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
+						["CanCollide\0"] = CollisionEnabled
 					}
 				}
 			})
@@ -87,8 +96,8 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = RHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(1.35 * currentCamera.HeadScale,-1.5,-3.2) * CFrame.Angles(0,0,0),
-						["Velocity\0"] = userInputService:IsKeyDown(Enum.KeyCode.MouseButton1) and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
-						["CanCollide\0"] = userInputService:IsKeyDown(Enum.KeyCode.MouseButton1) and true or false
+						["Velocity\0"] = CollisionEnabled and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
+						["CanCollide\0"] = CollisionEnabled and true or false
 					}
 				}
 			})
