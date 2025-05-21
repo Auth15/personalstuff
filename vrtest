@@ -33,9 +33,13 @@ local createLimb = function(properties)
 end 
 
 -- // setup limbs
-local Head = createLimb({ Name = "Head" }); 
-local LHand = createLimb({ Name = "LHand" });
-local RHand = createLimb({ Name = "RHand" });
+local Head = createLimb({ Name = "Head", Transparency = 0.5 }); 
+local LHand = createLimb({ Name = "LHand", Transparency = 0.5 });
+local RHand = createLimb({ Name = "RHand", Transparency = 0.5 });
+
+Head.CanCollide = false
+LHand.CanCollide = false
+RHand.CanCollide = false
 
 -- // update positions
 local character = lp.Character
