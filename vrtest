@@ -82,7 +82,6 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = LHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(-1.3 * currentCamera.HeadScale,-1.5,-3.5) * CFrame.Angles(0,0,0), 
-						["Velocity\0"] = useCollision and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
 						["CanCollide\0"] = useCollision
 					}
 				}
@@ -95,7 +94,6 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 					Part = RHand,
 					Surfaces = {
 						["CFrame\0"] = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(1.3 * currentCamera.HeadScale,-1.5,-3.5) * CFrame.Angles(0,0,0),
-						["Velocity\0"] = useCollision and Vector3.new(0,9e9,0) or Vector3.new(0,0,0),
 						["CanCollide\0"] = useCollision
 					}
 				}
