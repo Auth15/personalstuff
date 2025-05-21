@@ -36,18 +36,17 @@ local createLimb = function(properties)
 end 
 
 -- // setup limbs
+local character = lp.Character
+local Ltorso = character:FindFirstChild("LowerTorso"); 
+local head = character:FindFirstChild("Head"); 
+
 local Head = createLimb({ Name = "Head", Transparency = 0.5, CanCollide = false }); 
-local LHand = createLimb({ Name = "LHand", Transparency = 0.5, CanCollide = false });
-local RHand = createLimb({ Name = "RHand", Transparency = 0.5, CanCollide = false });
+local LHand = createLimb({ Name = "LHand", Transparency = 0.5, CanCollide = false, Size = Vector3.new(2,2,5) });
+local RHand = createLimb({ Name = "RHand", Transparency = 0.5, CanCollide = false, Size = Vector3.new(2,2,5) });
 
 Head.Transparency = 1
 
 -- // update positions
-local character = lp.Character
-local Ltorso = character:FindFirstChild("LowerTorso"); 
-
-Ltorso:Destroy();
-
 userInputService.UserCFrameChanged:Connect(function(part,move)
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
