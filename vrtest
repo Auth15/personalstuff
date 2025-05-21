@@ -46,6 +46,8 @@ local Ltorso = character:FindFirstChild("LowerTorso");
 Ltorso:Destroy();
 
 userInputService.UserCFrameChanged:Connect(function(part,move)
+	currentCamera.CFrame = Head.CFrame
+
 	if part == Enum.UserCFrame.Head then
 		task.spawn(function()
 			serverEndpoint:InvokeServer("SyncMove", {
@@ -62,7 +64,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = LHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.2,-2.5) * CFrame.Angles(math.rad(90),0,0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(180),0)
 				}
 			})
 		end); 
@@ -72,7 +74,7 @@ userInputService.UserCFrameChanged:Connect(function(part,move)
 				{
 					Part = RHand,
 					Anchored = true,
-					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.2,-2.5) * CFrame.Angles(math.rad(90),0,0)
+					CFrame = currentCamera.CFrame*(CFrame.new(move.p*(currentCamera.HeadScale-1))*move) * CFrame.new(0,-1.3,-2.5) * CFrame.Angles(0,math.rad(180),0)
 				}
 			})
 		end); 
