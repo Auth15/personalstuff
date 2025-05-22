@@ -19,7 +19,8 @@ end
 
 local CreateLimb = function(Properties)
 	local Limb = ServerEndpoint:InvokeServer("CreatePart", "Normal", CFrame.new(0,0,0), Workspace); 
-
+	
+	Limb.CanCollide = false
 	Limb:GetPropertyChangedSignal("CanCollide"):Connect(function()
 		Limb.CanCollide = false
 	end); 
@@ -42,6 +43,11 @@ local CreateLimb = function(Properties)
 end 
 
 -- // create limbs
+local Character = Player.Character
+local Torso = Character:FindFirstChild("LowerTorso"); 
+
+Torso:Destroy(); 
+
 local Head = CreateLimb({ Name = "Head", CanCollide = true, Size = Vector3.new(1,1,1) }); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(1,1,5) }), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(1,1,5) }); 
 
@@ -50,6 +56,24 @@ Head.Transparency = 1
 LHand.Transparency = .5
 
 -- // update
+local TriggerDown = false
+
+UserInputService.InputBegan:Connect(function(Input, Processed)
+	if Processed then return end 
+
+	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+		TriggerDown = true 
+	end
+end); 
+
+UserInputService.InputEnded:Connect(function(Input, Processed)
+	if Processed then return end 
+
+	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+		TriggerDown = false
+	end
+end); 
+
 UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 	if CFrameType == Enum.UserCFrame.Head then
 		task.spawn(function()
@@ -67,7 +91,8 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = LHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.new(-1.3 * CurrentCamera.HeadScale,-1.5,-3) * CFrame.Angles(0,0,0) 
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.new(-1.3 * CurrentCamera.HeadScale,-1.5,-3) * CFrame.Angles(0,0,0),
+						["Velocity\0"] = TriggerDown and Vector3.new(0,9e9,0) or Vector3.zero
 					}
 				}
 			})
@@ -78,7 +103,8 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = RHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.new(1 * CurrentCamera.HeadScale,-1.2,-3) * CFrame.Angles(0,0,0)
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.new(1 * CurrentCamera.HeadScale,-1.2,-3) * CFrame.Angles(0,0,0),
+						["Velocity\0"] = TriggerDown and Vector3.new(0,9e9,0) or Vector3.zero
 					}
 				}
 			})
