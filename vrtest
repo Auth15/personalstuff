@@ -63,7 +63,7 @@ LHand.Transparency = .5
 
 RunService.RenderStepped:Connect(function()
 	CurrentCamera.CameraType = Enum.CameraType.Scriptable
-	CurrentCamera.HeadScale = 5
+	CurrentCamera.HeadScale = 4
 end); 
 
 -- // update
