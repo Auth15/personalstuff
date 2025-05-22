@@ -66,7 +66,7 @@ Head.Transparency = 1
 LHand.Transparency = .5
 
 -- // update
-local TriggerDown = false
+local RearTriggerHeld = false
 
 for _, Jeep in next, Workspace.Map1.Jeeps:GetChildren() do 
 	if Jeep.Name == "Jeep" then
@@ -81,14 +81,14 @@ end);
 UserInputService.InputBegan:Connect(function(Input, Processed)
 	if Processed then return end 
 
-	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-		TriggerDown = true 
+	if Input.UserInputType == Enum.UserInputType.ButtonR2 then
+		RearTriggerHeld = true 
 	end
 end); 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
-	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-		TriggerDown = false
+	if Input.UserInputType == Enum.UserInputType.ButtonR2 then
+		RearTriggerHeld = false
 	end
 end); 
 
@@ -109,8 +109,7 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = LHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(0,math.rad(90),0),
-						["Velocity\0"] = TriggerDown and Vector3.new(0,9e9,0) or Vector3.zero
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(0,math.rad(90),0)
 					}
 				}
 			})
@@ -121,8 +120,7 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = RHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(0,math.rad(90),0),
-						["Velocity\0"] = TriggerDown and Vector3.new(0,9e9,0) or Vector3.zero
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(0,math.rad(90),0)
 					}
 				}
 			})
@@ -130,6 +128,9 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 	end
 end);
 
+local RotationOffset = Vector3.new(180,180,0)
 RunService.RenderStepped:Connect(function()
-	
+	if RearTriggerHeld then
+		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + (RHand.CFrame * CFrame.Angles(math.rad(RotationOffset.X-RotationOffset.X),math.rad(RotationOffset.Y-RotationOffset.Y),math.rad(RotationOffset.Z-RotationOffset.Z))).LookVector * CurrentCamera.HeadScale/2, 0.5)
+	end
 end); 
