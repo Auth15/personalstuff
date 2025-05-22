@@ -134,6 +134,6 @@ end);
 local RotationOffset = Vector3.new(180,180,0)
 RunService.RenderStepped:Connect(function()
 	if RearTriggerHeld then
-		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + (RHand.CFrame * CFrame.Angles(math.rad(RotationOffset.X-RHandOffset.X),math.rad(RotationOffset.Y-RHandOffset.Y),math.rad(RotationOffset.Z-RHandOffset.Z))).LookVector * CurrentCamera.HeadScale/2, 0.5)
+		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + (RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.X-RotationOffset.X),math.rad(RHandOffset.Y-RotationOffset.Y),math.rad(RHandOffset.Z-RotationOffset.Z))).LookVector * CurrentCamera.HeadScale/2, 0.5)
 	end
 end); 
