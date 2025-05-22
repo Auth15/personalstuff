@@ -55,11 +55,10 @@ local Character = Player.Character
 local Torso = Character:FindFirstChild("LowerTorso"); 
 local Humanoid = Character:FindFirstChild("Humanoid"); 
 
-Torso:Destroy(); 
 Humanoid.Sit = true 
 Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = true, Size = Vector3.new(1 * CurrentCamera.HeadScale,1 * CurrentCamera.HeadScale,1 * CurrentCamera.HeadScale) }); 
+local Head = CreateLimb({ Name = "Head", CanCollide = true, Size = Vector3.new(1,1,1) * CurrentCamera.HeadScale }); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1) }), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1) }); 
 
 RHand.Transparency = .5
