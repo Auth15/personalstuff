@@ -62,8 +62,7 @@ Head.Transparency = 1
 LHand.Transparency = .5
 
 RunService.RenderStepped:Connect(function()
-	CurrentCamera.CameraType = Enum.CameraType.Scriptable
-	CurrentCamera.HeadScale = 4
+	CurrentCamera.HeadScale = 3
 end); 
 
 -- // update
@@ -130,3 +129,7 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 		end); 
 	end
 end);
+
+RunService.RenderStepped:Connect(function()
+	
+end); 
