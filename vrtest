@@ -112,7 +112,7 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = LHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(math.rad(LHandOffset.X),math.rad(LHandOffset.Y),math.rad(LHandOffset.Z))
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position*CFrame.Angles(math.rad(LHandOffset.X),math.rad(LHandOffset.Y),math.rad(LHandOffset.Z)))
 					}
 				}
 			})
@@ -123,7 +123,7 @@ UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
 				{
 					Part = RHand,
 					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position) * CFrame.Angles(math.rad(RHandOffset.X),math.rad(RHandOffset.Y),math.rad(RHandOffset.Z))
+						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position*CFrame.Angles(math.rad(RHandOffset.X),math.rad(RHandOffset.Y),math.rad(RHandOffset.Z)))
 					}
 				}
 			})
