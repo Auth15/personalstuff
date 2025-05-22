@@ -58,7 +58,7 @@ Torso:Destroy();
 Humanoid.Sit = true 
 Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = true, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale-1) }); 
+local Head = CreateLimb({ Name = "Head", CanCollide = true, Size = Vector3.zero * (CurrentCamera.HeadScale) }); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1) }), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1) }); 
 
 RHand.Transparency = .5
@@ -81,13 +81,13 @@ end);
 UserInputService.InputBegan:Connect(function(Input, Processed)
 	if Processed then return end 
 
-	if Input.UserInputType == Enum.UserInputType.ButtonR2 then
+	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = true 
 	end
 end); 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
-	if Input.UserInputType == Enum.UserInputType.ButtonR2 then
+	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = false
 	end
 end); 
