@@ -149,17 +149,17 @@ end);
 local RotationOffset = Vector3.new(180,180,0)
 RunService.RenderStepped:Connect(function()
 	if ThumbstickInput1.Magnitude > 0.1 then
-		local MoveDir = RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.X-RotationOffset.X),math.rad(RHandOffset.Y-RotationOffset.Y),math.rad(RHandOffset.Z-RotationOffset.Z)).LookVector
-
-		if ThumbstickInput1.Y > -0.1 then
-			MoveDir = -MoveDir
-		end
-
-		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + MoveDir * CurrentCamera.HeadScale * 0.05, 0.2)
+		local ForwardDir = CurrentCamera.CFrame.LookVector
+		
+		local MoveDir = ForwardDir * (ThumbstickInput1.Y > -0.1 and -1 or 1)
+		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(
+			CurrentCamera.CFrame + MoveDir * CurrentCamera.HeadScale * 0.05,
+			0.2
+		)
 	end
 
 	if ThumbstickInput2.Magnitude > 0.1 then
 		local Yaw = -ThumbstickInput2.X * 2.5
-		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0,math.rad(Yaw),0); 
+		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0, math.rad(Yaw), 0)
 	end
-end); 
+end)
