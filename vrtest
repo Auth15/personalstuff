@@ -43,7 +43,7 @@ local CreateLimb = function(Properties, Parent)
 					Data.Part = Limb
 				end
 
-				PerformAction("CreateTextures", PropValue); PerformAction("SyncTextures", PropValue); 
+				PerformAction("CreateTextures", PropValue); PerformAction("SyncTexture", PropValue); 
 			end); 
 		elseif PropName == "Meshes" and typeof(PropValue) == "table" then
 			task.spawn(function()
@@ -75,11 +75,15 @@ local Character = Player.Character
 local Head = Character:FindFirstChild("Head"); 
 local Humanoid = Character:FindFirstChild("Humanoid"); 
 
+local LArm = Character:FindFirstChild("Left Arm");
+local RArm = Character:FindFirstChild("Right Arm"); 
+
+Humanoid.WalkSpeed = 0 
 Humanoid.Sit = true 
 Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Head.Mesh.MeshType, MeshId = Head.Mesh.MeshId, TextureId = Head.Mesh.TextureId, Scale = Head.Mesh.Scale }} }, Character); 
-local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default" }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default" }, Character); 
+local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1) }} }, Character); 
+local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = LArm.Color }, Character); 
 
 RHand.Transparency = .5
 Head.Transparency = 1
@@ -102,14 +106,6 @@ end Workspace.Map1.Jeeps.ChildAdded:Connect(function(Child)
 	end);
 end); 
 
-UserInputService.InputBegan:Connect(function(Input, Processed)
-	if Processed then return end 
-
-	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-		RearTriggerHeld = true 
-	end
-end); 
-
 UserInputService.InputEnded:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
 		ThumbstickInput2 = Vector2.zero
@@ -128,6 +124,37 @@ UserInputService.InputChanged:Connect(function(Input)
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
 		ThumbstickInput1 = Input.Position 
 	end
+end); 
+
+RunService.Heartbeat:Connect(function()
+	local HeadCF = VRService:GetUserCFrame(Enum.UserCFrame.Head); 
+	local LArmCF, RArmCF = VRService:GetUserCFrame(Enum.UserCFrame.LeftHand), VRService:GetUserCFrame(Enum.UserCFrame.RightHand); 
+
+	PerformAction("SyncSurface", {
+		{
+			Part = Head,
+			Surfaces = {
+				["Anchored\0"] = true,
+				["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(HeadCF.p*(CurrentCamera.HeadScale-1))*HeadCF)
+			}
+		},
+
+		{
+			Part = LHand,
+			Surfaces = {
+				["Anchored\0"] = true,
+				["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(LArmCF.p*(CurrentCamera.HeadScale-1))*LArmCF*CFrame.Angles(math.rad(LHandOffset.X),math.rad(LHandOffset.Y),math.rad(LHandOffset.Z)))
+			}
+		},
+
+		{
+			Part = RHand,
+			Surfaces = {
+				["Anchored\0"] = true,
+				["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(RArmCF.p*(CurrentCamera.HeadScale-1))*RArmCF*CFrame.Angles(math.rad(RHandOffset.X),math.rad(RHandOffset.Y),math.rad(RHandOffset.Z)))
+			}
+		}
+	})
 end); 
 
 UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
