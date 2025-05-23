@@ -39,25 +39,19 @@ local CreateLimb = function(Properties, Parent)
 	for PropName, PropValue in next, Properties do 
 		if PropName == "Textures" and typeof(PropValue) == "table" then
 			task.spawn(function()
-				local DecalProperties = {PropValue}
-				DecalProperties.Part = Limb
-
-				for Name, Value in next, DecalProperties do 
-					print(Name, Value)
+				for _, Data in ipairs(PropValue) do 
+					Data.Part = Limb
 				end
 
-				PerformAction("CreateTextures", DecalProperties); PerformAction("SyncTextures", DecalProperties); 
+				PerformAction("CreateTextures", PropValue); PerformAction("SyncTextures", PropValue); 
 			end); 
 		elseif PropName == "Meshes" and typeof(PropValue) == "table" then
 			task.spawn(function()
-				local MeshProperties = {PropValue}
-				MeshProperties.Part = Limb
-
-				for Name, Value in next, MeshProperties do 
-					print(Name, Value)
+				for _, Data in ipairs(PropValue) do 
+					Data.Part = Limb
 				end
 
-				PerformAction("CreateMeshes", MeshProperties); PerformAction("SyncMesh", MeshProperties); 
+				PerformAction("CreateMeshes", PropValue); PerformAction("SyncMesh", PropValue); 
 			end); 
 		else
 			PatchedProperties[PropName .. "\0"] = PropValue
