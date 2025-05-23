@@ -92,6 +92,25 @@ LHand.Transparency = .5
 local RHandOffset = Vector3.new(0,90,0);
 local LHandOffset = Vector3.new(0,90,0);
 
+task.spawn(function()
+	local BoomBox = Player.Backpack:FindFirstChild("BoomBox")
+
+	local Weld
+	BoomBox.Equipped:Connect(function()
+		if not Weld then
+			PerformAction("SyncMove", {
+				{
+					Part = BoomBox.Handle,
+					Anchored = true,
+					CFrame = RHand.CFrame * CFrame.new(0,RHand.Size.Z * 1,0)
+				}
+			}); 
+			
+			Weld = PerformAction("CreateWelds", {BoomBox.Handle}, RHand); 
+		end
+	end); 
+end); 
+
 -- // update
 local ThumbstickInput1 = Vector2.zero
 local ThumbstickInput2 = Vector2.zero 
