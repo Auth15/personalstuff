@@ -78,12 +78,23 @@ task.spawn(function()
 			Part = BoomBox.Handle,
 			Surfaces = {
 				["Anchored\0"] = true,
-				["CFrame\0"] = RHand.CFrame * CFrame.Angles(math.rad(-RHandOffset.Y), math.rad(RHandOffset.Y),0) * CFrame.new(0,RHand.Size.Z * 0.5,0);
+				["CFrame\0"] = RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.Y), math.rad(RHandOffset.Y),0) * CFrame.new(0,RHand.Size.Z * 1,0);
 			}
 		}
 	});
-	
+
+	BoomBox.Handle:BreakJoints(); 
 	local Welds = PerformAction("CreateWelds", {BoomBox.Handle}, RHand); 
+
+	PerformAction("SyncSurface", {
+		{
+			Part = BoomBox.Handle,
+			Surfaces = {
+				["Anchored\0"] = false,
+				["CFrame\0"] = RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.Y), math.rad(RHandOffset.Y),0) * CFrame.new(0,RHand.Size.Z * 1,0);
+			}
+		}
+	});
 end);
 
 -- // update
