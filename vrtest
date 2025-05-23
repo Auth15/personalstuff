@@ -159,6 +159,6 @@ RunService.RenderStepped:Connect(function()
 
 	if ThumbstickInput2.Magnitude > 0.1 then
 		local Yaw = -ThumbstickInput2.X * 2.5
-		CurrentCamera.CFrame = CFrame.new(CurrentCamera.CFrame.p + Vector3.new(0,ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.8,0)) * CFrame.Angles(0, math.rad(Yaw), 0)
+		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0, math.rad(Yaw), 0) * CFrame.new(0, ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.05, 0)
 	end
 end)
