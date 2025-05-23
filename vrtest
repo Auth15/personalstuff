@@ -99,7 +99,7 @@ end);
 
 -- // update
 local RearTriggerHeld = false
-local ThumbstickInput
+local ThumbstickInput = Vector2.zero 
 
 for _, Jeep in next, Workspace.Map1.Jeeps:GetChildren() do 
 	if Jeep.Name == "Jeep" then
