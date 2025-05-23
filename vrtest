@@ -151,11 +151,11 @@ RunService.RenderStepped:Connect(function()
 	if ThumbstickInput1.Magnitude > 0.1 then
 		local MoveDir = RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.X-RotationOffset.X),math.rad(RHandOffset.Y-RotationOffset.Y),math.rad(RHandOffset.Z-RotationOffset.Z)).LookVector
 
-		if ThumbstickInput1.Y <= -0.1 then
+		if ThumbstickInput1.Y > -0.1 then
 			MoveDir = -MoveDir
 		end
 
-		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + MoveDir * CurrentCamera.HeadScale * 0.5, 0.5)
+		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + MoveDir * CurrentCamera.HeadScale * 0.05, 0.2)
 	end
 
 	if ThumbstickInput2.Magnitude > 0.1 then
