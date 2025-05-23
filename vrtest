@@ -118,8 +118,9 @@ UserInputService.InputBegan:Connect(function(Input, Processed)
 		RearTriggerHeld = true 
 	end
 
+	print
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
-		thumbstickInput = Input.Position
+		ThumbstickInput = Input.Position
 	end
 end); 
 
@@ -176,7 +177,7 @@ RunService.RenderStepped:Connect(function()
 	end
 
 	if ThumbstickInput.Magnitude > 0.1 then
-		local Yaw = -ThumbstickInput.X * 2
+		local Yaw = -ThumbstickInput.X * 1.5
 
 		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0,math.rad(Yaw),0); 
 	end
