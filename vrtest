@@ -37,12 +37,12 @@ local CreateLimb = function(Properties, Parent)
 
 	local PatchedProperties = {} 
 	for PropName, PropValue in next, Properties do 
-		PatchedProperties[PropName .. "\0"] = PropValue
-
-		if PropName == "Decal" and typeof(PropValue) == "table" then
+		if PropName == "Textures" and typeof(PropValue) == "table" then
 			task.spawn(function()
 				local DecalProperties = {PropValue}
 				DecalProperties.Part = Limb
+
+				PatchedProperties["Decal"] = nil 
 
 				PerformAction("CreateTextures", DecalProperties); PerformAction("SyncTextures", DecalProperties); 
 			end); 
@@ -51,8 +51,12 @@ local CreateLimb = function(Properties, Parent)
 				local MeshProperties = {PropValue}
 				MeshProperties.Part = Limb
 
+				PatchedProperties["Meshes"] = nil 
+
 				PerformAction("CreateMeshes", MeshProperties); PerformAction("SyncMesh", MeshProperties); 
 			end); 
+		else
+			PatchedProperties[PropName .. "\0"] = PropValue
 		end
 	end
 
@@ -76,7 +80,7 @@ local Humanoid = Character:FindFirstChild("Humanoid");
 Humanoid.Sit = true 
 Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Decal = {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0}, Meshes = {MeshType = Head.Mesh.MeshType, MeshId = Head.Mesh.MeshId, TextureId = Head.Mesh.TextureId, Scale = Head.Mesh.Scale} }, Character); 
+local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Textures = {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0}, Meshes = {MeshType = Head.Mesh.MeshType, MeshId = Head.Mesh.MeshId, TextureId = Head.Mesh.TextureId, Scale = Head.Mesh.Scale} }, Character); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default" }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default" }, Character); 
 
 RHand.Transparency = .5
