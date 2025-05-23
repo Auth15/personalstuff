@@ -69,9 +69,10 @@ local RHandOffset = Vector3.new(0,90,0);
 local LHandOffset = Vector3.new(0,90,0);
 
 task.spawn(function()
-	local BoomBox = LP.Backpack:FindFirstChild("BoomBox");
+	local BoomBox = Player.Backpack:FindFirstChild("BoomBox");
 
-	BoomBox.Parent = LP.Character
+	BoomBox.Parent = Player.Character
+	task.wait(0.3); 
 	PerformAction("SyncSurface", {
 		{
 			Part = BoomBox.Handle,
