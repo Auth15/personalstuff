@@ -99,6 +99,7 @@ end);
 
 -- // update
 local RearTriggerHeld = false
+local ThumbstickInput
 
 for _, Jeep in next, Workspace.Map1.Jeeps:GetChildren() do 
 	if Jeep.Name == "Jeep" then
@@ -116,11 +117,19 @@ UserInputService.InputBegan:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = true 
 	end
+
+	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
+		thumbstickInput = Input.Position
+	end
 end); 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = false
+	end
+
+	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
+		thumbstickInput = Vector2.zero
 	end
 end); 
 
@@ -164,5 +173,11 @@ local RotationOffset = Vector3.new(180,180,0)
 RunService.RenderStepped:Connect(function()
 	if RearTriggerHeld then
 		CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CurrentCamera.CoordinateFrame + (RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.X-RotationOffset.X),math.rad(RHandOffset.Y-RotationOffset.Y),math.rad(RHandOffset.Z-RotationOffset.Z))).LookVector * CurrentCamera.HeadScale/2, 0.5)
+	end
+
+	if ThumbstickInput.Magnitude > 0.1 then
+		local Yaw = -ThumbstickInput.X * 2
+
+		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0,math.rad(Yaw),0); 
 	end
 end); 
