@@ -117,20 +117,18 @@ UserInputService.InputBegan:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = true 
 	end
-
-	print
-	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
-		ThumbstickInput = Input.Position
-	end
 end); 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = false
 	end
+end); 
 
+UserInputService.InputChanged:Connect(function(Input)
+	print(Input); 
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
-		thumbstickInput = Vector2.zero
+		
 	end
 end); 
 
