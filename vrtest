@@ -98,15 +98,18 @@ task.spawn(function()
 	local Weld
 	BoomBox.Equipped:Connect(function()
 		if not Weld then
-			PerformAction("SyncMove", {
-				{
-					Part = BoomBox.Handle,
-					Anchored = true,
-					CFrame = RHand.CFrame * CFrame.new(0,RHand.Size.Z * 1,0)
-				}
-			}); 
-			
-			Weld = PerformAction("CreateWelds", {BoomBox.Handle}, RHand); 
+			task.defer(function()
+				PerformAction("SyncMove", {
+					{
+						Part = BoomBox.Handle,
+						Anchored = true,
+						CFrame = RHand.CFrame * CFrame.new(0,RHand.Size.Z * 1,0)
+					}
+				}); 
+
+				BoomBox.Handle:BreakJoints(); 
+				Weld = PerformAction("CreateWelds", {BoomBox.Handle}, RHand)[1]; 
+			end); 
 		end
 	end); 
 end); 
