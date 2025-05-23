@@ -42,7 +42,9 @@ local CreateLimb = function(Properties, Parent)
 				local DecalProperties = {PropValue}
 				DecalProperties.Part = Limb
 
-				PatchedProperties["Decal"] = nil 
+				for Name, Value in next, DecalProperties do 
+					print(Name, Value)
+				end
 
 				PerformAction("CreateTextures", DecalProperties); PerformAction("SyncTextures", DecalProperties); 
 			end); 
@@ -51,7 +53,9 @@ local CreateLimb = function(Properties, Parent)
 				local MeshProperties = {PropValue}
 				MeshProperties.Part = Limb
 
-				PatchedProperties["Meshes"] = nil 
+				for Name, Value in next, MeshProperties do 
+					print(Name, Value)
+				end
 
 				PerformAction("CreateMeshes", MeshProperties); PerformAction("SyncMesh", MeshProperties); 
 			end); 
