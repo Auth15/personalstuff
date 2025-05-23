@@ -68,35 +68,6 @@ LHand.Transparency = .5
 local RHandOffset = Vector3.new(0,90,0);
 local LHandOffset = Vector3.new(0,90,0);
 
-task.spawn(function()
-	local BoomBox = Player.Backpack:FindFirstChild("BoomBox");
-
-	BoomBox.Parent = Player.Character
-	task.wait(0.3); 
-	PerformAction("SyncSurface", {
-		{
-			Part = BoomBox.Handle,
-			Surfaces = {
-				["Anchored\0"] = true,
-				["CFrame\0"] = RHand.CFrame * CFrame.new(0,RHand.Size.Z * 1,0);
-			}
-		}
-	});
-
-	BoomBox.Handle:BreakJoints(); 
-	local Welds = PerformAction("CreateWelds", {BoomBox.Handle}, RHand); 
-
-	PerformAction("SyncSurface", {
-		{
-			Part = BoomBox.Handle,
-			Surfaces = {
-				["Anchored\0"] = false,
-				["CFrame\0"] = RHand.CFrame * CFrame.Angles(math.rad(RHandOffset.Y), math.rad(RHandOffset.Y),0) * CFrame.new(0,RHand.Size.Z * 1,0);
-			}
-		}
-	});
-end);
-
 -- // update
 local RearTriggerHeld = false
 local ThumbstickInput = Vector2.zero 
@@ -123,12 +94,15 @@ UserInputService.InputEnded:Connect(function(Input, Processed)
 	if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 		RearTriggerHeld = false
 	end
+
+	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
+		ThumbstickInput = Vector2.zero
+	end
 end); 
 
 UserInputService.InputChanged:Connect(function(Input)
-	print(Input); 
-	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
-		
+	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
+		ThumbstickInput = Input.Position
 	end
 end); 
 
@@ -175,7 +149,7 @@ RunService.RenderStepped:Connect(function()
 	end
 
 	if ThumbstickInput.Magnitude > 0.1 then
-		local Yaw = -ThumbstickInput.X * 1.5
+		local Yaw = -ThumbstickInput.X * 2
 
 		CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0,math.rad(Yaw),0); 
 	end
