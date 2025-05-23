@@ -65,8 +65,25 @@ RHand.Transparency = .5
 Head.Transparency = 1
 LHand.Transparency = .5
 
-local RHandOffset = Vector3.new(0,90,0)
-local LHandOffset = Vector3.new(0,90,0)
+local RHandOffset = Vector3.new(0,90,0);
+local LHandOffset = Vector3.new(0,90,0);
+
+task.spawn(function()
+	local BoomBox = LP.Backpack:FindFirstChild("BoomBox");
+
+	BoomBox.Parent = LP.Character
+	PerformAction("SyncSurface", {
+		{
+			Part = BoomBox.Handle,
+			Surfaces = {
+				["Anchored\0"] = true,
+				["CFrame\0"] = RHand.CFrame * CFrame.Angles(math.rad(-RHandOffset.Y), math.rad(RHandOffset.Y),0) * CFrame.new(0,RHand.Size.Z * 0.5,0);
+			}
+		}
+	});
+	
+	local Welds = PerformAction("CreateWelds", {BoomBox.Handle}, RHand); 
+end);
 
 -- // update
 local RearTriggerHeld = false
