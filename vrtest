@@ -17,7 +17,7 @@ local CurrentCamera = Workspace.CurrentCamera
 
 local ServerEndpoint = Player.Backpack:FindFirstChild("ServerEndpoint", true); 
 
-RunService.RenderStepped:Connect(function()
+CurrentCamera:GetPropertyChangedSignal("CFrame"):Connect(function()
 	CurrentCamera.CameraType = Enum.CameraType.Scriptable
 	CurrentCamera.HeadScale = 3 
 end); 
@@ -92,28 +92,6 @@ LHand.Transparency = .5
 local RHandOffset = Vector3.new(0,90,0);
 local LHandOffset = Vector3.new(0,90,0);
 
-task.spawn(function()
-	local BoomBox = Player.Backpack:FindFirstChild("BoomBox")
-
-	local Weld
-	BoomBox.Equipped:Connect(function()
-		if not Weld then
-			task.defer(function()
-				PerformAction("SyncMove", {
-					{
-						Part = BoomBox.Handle,
-						Anchored = true,
-						CFrame = RHand.CFrame * CFrame.new(0,RHand.Size.Z * 1,0)
-					}
-				}); 
-
-				BoomBox.Handle:BreakJoints(); 
-				Weld = PerformAction("CreateWelds", {BoomBox.Handle}, RHand)[1]; 
-			end); 
-		end
-	end); 
-end); 
-
 -- // update
 local ThumbstickInput1 = Vector2.zero
 local ThumbstickInput2 = Vector2.zero 
@@ -176,44 +154,8 @@ RunService.Heartbeat:Connect(function()
 				["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(RArmCF.p*(CurrentCamera.HeadScale-1))*RArmCF*CFrame.Angles(math.rad(RHandOffset.X),math.rad(RHandOffset.Y),math.rad(RHandOffset.Z)))
 			}
 		}
-	})
+	});
 end); 
-
-UserInputService.UserCFrameChanged:Connect(function(CFrameType, Position)
-	if CFrameType == Enum.UserCFrame.Head then
-		task.spawn(function()
-			PerformAction("SyncMove", {
-				{
-					Part = Head,
-					Anchored = true,
-					CFrame = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position)
-				}
-			})
-		end); 
-	elseif CFrameType == Enum.UserCFrame.LeftHand then
-		task.spawn(function()
-			PerformAction("SyncSurface", {
-				{
-					Part = LHand,
-					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position*CFrame.Angles(math.rad(LHandOffset.X),math.rad(LHandOffset.Y),math.rad(LHandOffset.Z)))
-					}
-				}
-			})
-		end); 
-	elseif CFrameType == Enum.UserCFrame.RightHand then
-		task.spawn(function()
-			PerformAction("SyncSurface", {
-				{
-					Part = RHand,
-					Surfaces = {
-						["CFrame\0"] = CurrentCamera.CFrame*(CFrame.new(Position.p*(CurrentCamera.HeadScale-1))*Position*CFrame.Angles(math.rad(RHandOffset.X),math.rad(RHandOffset.Y),math.rad(RHandOffset.Z)))
-					}
-				}
-			})
-		end); 
-	end
-end);
 
 local RotationOffset = Vector3.new(180,180,0);
 RunService.RenderStepped:Connect(function()
