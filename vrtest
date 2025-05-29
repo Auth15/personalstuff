@@ -76,7 +76,7 @@ local Humanoid = Character:FindFirstChild("Humanoid");
 local LArm = Character:FindFirstChild("Left Arm");
 local RArm = Character:FindFirstChild("Right Arm"); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * CurrentCamera.HeadScale * 0.3, CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(1,1,1) * CurrentCamera.HeadScale * 0.3 }} }, Character); 
+local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * CurrentCamera.HeadScale , CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.FileMesh, Scale = Vector3.new(1,1,1) * CurrentCamera.HeadScale }} }, Character); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = LArm.Color }, Character); 
 
 RHand.Transparency = .5
@@ -150,14 +150,14 @@ RunService.RenderStepped:Connect(function()
 	if ThumbstickInput1.Magnitude > 0.15 then
 		local MoveDir = CurrentCamera.CFrame.LookVector * ThumbstickInput1.Y
 	        CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(
-	            CurrentCamera.CFrame + MoveDir * CurrentCamera.HeadScale * 0.8,
-	            0.35
+	            CurrentCamera.CFrame + MoveDir * CurrentCamera.HeadScale * 0.5,
+	            0.5
 	        );
 	end
 
 	if ThumbstickInput2.Magnitude > 0.15 then
 		if math.abs(ThumbstickInput2.Y) > math.abs(ThumbstickInput2.X) then
-			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.new(0, ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.2, 0)
+			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.new(0, ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.25, 0)
 		else
 			local Yaw = -ThumbstickInput2.X * 2.5
 			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0, math.rad(Yaw), 0)
