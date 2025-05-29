@@ -18,7 +18,7 @@ local CurrentCamera = Workspace.CurrentCamera
 local ServerEndpoint = Player.Backpack:FindFirstChild("ServerEndpoint", true); 
 
 CurrentCamera.CameraType = Enum.CameraType.Scriptable
-CurrentCamera.HeadScale = 15
+CurrentCamera.HeadScale = 5
 
 -- // functions 
 local PerformAction = function(ActionName, ...)
