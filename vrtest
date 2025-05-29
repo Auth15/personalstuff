@@ -73,15 +73,6 @@ local Character = Player.Character
 local Head = Character:FindFirstChild("Head"); 
 local Humanoid = Character:FindFirstChild("Humanoid"); 
 
-task.spawn(PerformAction, "SyncSurface", {
-	{
-		Part = Character,
-		Surfaces = {
-			["Parent\0"] = game:GetService("JointsService")
-		}
-	}
-})
-
 local LArm = Character:FindFirstChild("Left Arm");
 local RArm = Character:FindFirstChild("Right Arm"); 
 
