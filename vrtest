@@ -94,7 +94,7 @@ local ThumbstickInput1 = Vector2.zero
 local ThumbstickInput2 = Vector2.zero 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
-	print(("InputEnded | UIT: %s | Keycode: %s", Input.UserInputType, Input.KeyCode))
+	print(("InputEnded | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
 
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
 		ThumbstickInput2 = Vector2.zero
@@ -106,7 +106,7 @@ UserInputService.InputEnded:Connect(function(Input, Processed)
 end); 
 
 UserInputService.InputChanged:Connect(function(Input)
-	print(("InputChanged | UIT: %s | Keycode: %s", Input.UserInputType, Input.KeyCode))
+	print(("InputChanged | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
 
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
 		ThumbstickInput2 = Input.Position
