@@ -18,7 +18,7 @@ local CurrentCamera = Workspace.CurrentCamera
 local ServerEndpoint = Player.Backpack:FindFirstChild("ServerEndpoint", true); 
 
 CurrentCamera.CameraType = Enum.CameraType.Scriptable
-CurrentCamera.HeadScale = 3 
+CurrentCamera.HeadScale = 12 
 
 -- // functions 
 local PerformAction = function(ActionName, ...)
@@ -70,17 +70,23 @@ end
 
 -- // create limbs
 local Character = Player.Character
-
-task.spawn(PerformAction, "Remove", {Character});
-
 local Head = Character:FindFirstChild("Head"); 
 local Humanoid = Character:FindFirstChild("Humanoid"); 
+
+task.spawn(PerformAction, "SyncSurface", {
+	{
+		Part = Character,
+		Surfaces = {
+			["Parent\0"] = game:GetService("JointsService")
+		}
+	}
+})
 
 local LArm = Character:FindFirstChild("Left Arm");
 local RArm = Character:FindFirstChild("Right Arm"); 
 
-local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1) }} }, Character); 
-local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = LArm.Color }, Character); 
+local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(0.5,0.5,0.5) * (CurrentCamera.HeadScale+0.5) }} }, Character); 
+local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1.2), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1.2), CollisionGroup = "Default", Color = LArm.Color }, Character); 
 
 RHand.Transparency = .5
 Head.Transparency = 1
