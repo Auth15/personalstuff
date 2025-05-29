@@ -17,10 +17,8 @@ local CurrentCamera = Workspace.CurrentCamera
 
 local ServerEndpoint = Player.Backpack:FindFirstChild("ServerEndpoint", true); 
 
-CurrentCamera:GetPropertyChangedSignal("CFrame"):Connect(function()
-	CurrentCamera.CameraType = Enum.CameraType.Scriptable
-	CurrentCamera.HeadScale = 3 
-end); 
+CurrentCamera.CameraType = Enum.CameraType.Scriptable
+CurrentCamera.HeadScale = 3 
 
 -- // functions 
 local PerformAction = function(ActionName, ...)
@@ -72,15 +70,14 @@ end
 
 -- // create limbs
 local Character = Player.Character
+
+task.spawn(PerformAction, "Remove", {Character});
+
 local Head = Character:FindFirstChild("Head"); 
 local Humanoid = Character:FindFirstChild("Humanoid"); 
 
 local LArm = Character:FindFirstChild("Left Arm");
 local RArm = Character:FindFirstChild("Right Arm"); 
-
-Humanoid.WalkSpeed = 0 
-Humanoid.Sit = true 
-Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false); 
 
 local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(1,1,1) * (CurrentCamera.HeadScale+1) }} }, Character); 
 local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale-1), CollisionGroup = "Default", Color = LArm.Color }, Character); 
@@ -96,17 +93,9 @@ local LHandOffset = Vector3.new(0,90,0);
 local ThumbstickInput1 = Vector2.zero
 local ThumbstickInput2 = Vector2.zero 
 
-for _, Jeep in next, Workspace.Map1.Jeeps:GetChildren() do 
-	if Jeep.Name == "Jeep" then
-		Jeep:Destroy(); 
-	end
-end Workspace.Map1.Jeeps.ChildAdded:Connect(function(Child)
-	task.defer(function()
-		Child:Destroy(); 
-	end);
-end); 
-
 UserInputService.InputEnded:Connect(function(Input, Processed)
+	print(("InputEnded | UIT: %s | Keycode: %s", Input.UserInputType, Input.KeyCode))
+
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
 		ThumbstickInput2 = Vector2.zero
 	end
@@ -117,6 +106,8 @@ UserInputService.InputEnded:Connect(function(Input, Processed)
 end); 
 
 UserInputService.InputChanged:Connect(function(Input)
+	print(("InputChanged | UIT: %s | Keycode: %s", Input.UserInputType, Input.KeyCode))
+
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
 		ThumbstickInput2 = Input.Position
 	end
@@ -159,7 +150,7 @@ end);
 
 local RotationOffset = Vector3.new(180,180,0);
 RunService.RenderStepped:Connect(function()
-	if ThumbstickInput1.Magnitude > 0.1 then
+	if ThumbstickInput1.Magnitude > 0.12 then
 		local MoveDir = CurrentCamera.CFrame.LookVector * ThumbstickInput1.Y
 	        CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(
 	            CurrentCamera.CFrame + MoveDir * CurrentCamera.HeadScale * 0.8,
@@ -167,9 +158,9 @@ RunService.RenderStepped:Connect(function()
 	        );
 	end
 
-	if ThumbstickInput2.Magnitude > 0.1 then
+	if ThumbstickInput2.Magnitude > 0.12 then
 		if math.abs(ThumbstickInput2.Y) > math.abs(ThumbstickInput2.X) then
-			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.new(0, ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.25, 0)
+			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.new(0, ThumbstickInput2.Y * CurrentCamera.HeadScale * 0.3, 0)
 		else
 			local Yaw = -ThumbstickInput2.X * 2.5
 			CurrentCamera.CFrame = CurrentCamera.CFrame * CFrame.Angles(0, math.rad(Yaw), 0)
