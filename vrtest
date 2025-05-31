@@ -11,6 +11,8 @@ game:GetService("StarterGui"):SetCore("VREnableControllerModels", false);
 
 VRService.FadeOutViewOnCollision = false
 
+local DEBUGGING = false
+
 -- // constants
 local Player = Players.LocalPlayer
 local CurrentCamera = Workspace.CurrentCamera
@@ -78,8 +80,8 @@ local RArm = Character:FindFirstChild("Right Arm");
 
 local LimbStorage = PerformAction("CreateGroup", "Folder", Character, {});
 
-local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (1.5 + (CurrentCamera.HeadScale*0.6)), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(.6,.6,.6) * (0.5 + (CurrentCamera.HeadScale*0.2)), MeshId = Head.Mesh.MeshId, TextureId = Head.Mesh.TextureId }} }, LimbStorage); 
-local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = RArm.Color }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = LArm.Color }, LimbStorage); 
+local Head = CreateLimb({ Name = "Head", CanCollide = false, Size = Vector3.new(1,1,1) * (1.5 + (CurrentCamera.HeadScale*0.6)), CollisionGroup = "Default", Color = Head.Color, Textures = { {TextureType = "Decal", Face = Enum.NormalId.Front, Texture = Head.face.Texture, Transparency = 0} }, Meshes = {{ MeshType = Enum.MeshType.Head, Scale = Vector3.new(.6,.6,.6) * (0.5 + (CurrentCamera.HeadScale*0.2)), MeshId = Head.Mesh.MeshId, TextureId = Head.Mesh.TextureId }}, Anchored = false }, LimbStorage); 
+local RHand, LHand = CreateLimb({ Name = "RHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = RArm.Color, Anchored = false }, Character), CreateLimb({ Name = "LHand", CanCollide = true, Size = Vector3.new(2,1,1) * (CurrentCamera.HeadScale*0.5), CollisionGroup = "Default", Color = LArm.Color, Anchored = false }, LimbStorage); 
 
 RHand.Transparency = .5
 Head.Transparency = 1
@@ -93,26 +95,26 @@ local ThumbstickInput1 = Vector2.zero
 local ThumbstickInput2 = Vector2.zero 
 
 UserInputService.InputEnded:Connect(function(Input, Processed)
-	print(("InputEnded | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
-
-	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
-		ThumbstickInput2 = Vector2.zero
+	if DEBUGGING then
+		print(("InputEnded | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
 	end
 
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
 		ThumbstickInput1 = Vector2.zero
+	elseif Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
+		ThumbstickInput2 = Vector2.zero
 	end
 end); 
 
 UserInputService.InputChanged:Connect(function(Input)
-	print(("InputChanged | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
-
-	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
-		ThumbstickInput2 = Input.Position
-	end
+	if DEBUGGING then
+		print(("InputChanged | UIT: %s | Keycode: %s"):format(Input.UserInputType.Name, Input.KeyCode.Name))
+	end	
 
 	if Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick1 then
-		ThumbstickInput1 = Input.Position 
+		ThumbstickInput1 = Input.Position
+	elseif Input.UserInputType == Enum.UserInputType.Gamepad1 and Input.KeyCode == Enum.KeyCode.Thumbstick2 then
+		ThumbstickInput2 = Input.Position 
 	end
 end); 
 
